@@ -1,0 +1,49 @@
+.col_1 h2 {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+label {
+  color: #4a4a4a;
+  cursor: pointer;
+  vertical-align: middle;  
+}
+
+/* Внешний вид чекбокса */
+label::before {
+  content: " ";
+  color: #4a4a4a;
+  display: inline-block;
+  font: 20px/30px Arial;
+  margin-right: 15px;
+  position: relative;
+  text-align: center;
+  text-indent: 9px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 1px solid #9ABBCE;
+  border-radius: 2px;
+  border-image: initial;
+  vertical-align: middle;
+}
+
+input:checked + label::before {
+  content: " ";
+  background-image: url('../../images/check.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
