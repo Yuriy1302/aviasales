@@ -1,19 +1,30 @@
 import React from "react";
 
-import Filter from "../Filter";
-import TicketsList from "../TicketsList";
+import Filter from '../Filter';
+import TicketsList from '../TicketsList';
+import ErrorIndicator from '../ErrorIndicator';
+import Spiner from '../Spiner';
 
 import logo from "../../images/logo.svg";
 
 import "./App.scss";
 
+
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      error: false,
+      loader: false
+    };
   }
 
   render() {
+
+    if (this.state.error) {
+      return <ErrorIndicator />
+    }
+
     return (
       <div>
         <div className="center-logo">
@@ -33,7 +44,9 @@ class App extends React.Component {
                 Самый быстрый
               </button>
             </div>
-            <TicketsList />
+            {
+              this.state.loader ? <Spiner /> : <TicketsList />
+            }
           </div>
         </div>
       </div>
