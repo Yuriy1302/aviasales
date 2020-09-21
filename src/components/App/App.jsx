@@ -20,8 +20,8 @@ class App extends React.Component {
   }
 
   render() {
-
-    if (this.state.error) {
+    const { error, loader } = this.state;
+    if (error) {
       return <ErrorIndicator />
     }
 
@@ -45,7 +45,7 @@ class App extends React.Component {
               </button>
             </div>
             {
-              this.state.loader ? <Spiner /> : <TicketsList />
+              loader ? <Spiner /> : <TicketsList />
             }
           </div>
         </div>

@@ -2,149 +2,94 @@ import React from "react";
 
 import "./Filter.scss";
 
-/* const filters = [
-  { name: 'allTr', title: 'Все', isChecked: false },
-  { name: 'noTr', title: 'Без пересадок', isChecked: false },
-  { name: 'oneTr', title: '1 пересадка', isChecked: false },
-  { name: 'twoTr', title: '2 пересадки', isChecked: false },
-  { name: 'thrieTr', title: '3 пересадки', isChecked: false },
-]; */
-
-/* const filters = [
-  [ 'allTr', false ],
-  { name: 'noTr', isChecked: false },
-  { name: 'oneTr', isChecked: false },
-  { name: 'twoTr', isChecked: false },
-  { name: 'thrieTr', isChecked: false },
-];
- */
-/* const Checkbox = (props) => {
-  const { name, isChecked, } = props;
-  render (
-    <>
-      <input type="checkbox" onChange={this.onSetAllCheckboxes} checked={this.state.allTr} id="all-check" name="allTr" />
-      <label htmlFor="all-check">Все</label>
-    </>
-  )
-} */
-
-
-
 class Filter extends React.Component {
 
   constructor() {
     super();
       this.state = {
-        filterState: [
+        filters: [
           { id: 1, name: 'allTr', title: 'Все', isChecked: false },
           { id: 2, name: 'noTr', title: 'Без пересадок', isChecked: false },
-          { id: 3, name: 'oneTr', title: '1 пересадка', isChecked: true },
+          { id: 3, name: 'oneTr', title: '1 пересадка', isChecked: false },
           { id: 4, name: 'twoTr', title: '2 пересадки', isChecked: false },
           { id: 5, name: 'thrieTr', title: '3 пересадки', isChecked: false },
         ],
-        /* allTr: false,
-        noTr: false,
-        oneTr: false,
-        twoTr: false,
-        thrieTr: false, */
       };
   }
 
-  handleCheckboxClick = (e) => {
+  handleCheckboxClick = (event) => {
+    const { name } = event.target;
     
-    const name = e.target.name;
-    //const index = this.state.filterState.findIndex(item => item.name === name);
-    console.log(name);
-    //console.log(index);
+    if (name === 'allTr' && !event.target.checked) {
+      this.setAllCheckboxes(false);
+      return;
+    }
     
-
+    if (name === 'allTr' && event.target.checked) {
+      this.setAllCheckboxes(true);
+      return;
+    }
     
-
+    const newFilters = this.handleToggleFilters(name);
+    this.setState({ filters: newFilters });
+  }
+  
+  setAllCheckboxes = (bool) => {
+    const { filters } = this.state;
+    const newFilters = filters.map(item => {
+      return { ...item, isChecked: bool };
+    });
+    this.setState({ filters: newFilters });
   }
 
-/*   filtered = (event) => {
-    event.preventDefault();
-    console.log(event.target.id);
-  } */
+  handleToggleFilters = (name) => {
+   const { filters } = this.state;
+    const index = filters.findIndex(item => item.name === name);
+    const item = filters[index];
+    const item0 = filters[0];
+    const newItem = { ...item, isChecked: !item.isChecked };
 
-/*   onSetAllCheckboxes = () => {
-    if (this.state.allTr) {
-      this.setState({
-        allTr: false,
-        noTr: false,
-        oneTr: false,
-        twoTr: false,
-        thrieTr: false,
-      });
-    } else {
-      this.setState({
-        allTr: true,
-        noTr: true,
-        oneTr: true,
-        twoTr: true,
-        thrieTr: true,
-      });
+    if (!newItem.isChecked) {
+      const newFirstElem = { ...item0, isChecked: false };
+      const newFilters = [ newFirstElem, ...filters.slice(1, index), newItem, ...filters.slice(index + 1) ];
+      return newFilters;
     }
 
-  } */
+    const newFilters = [ ...filters.slice(0, index), newItem, ...filters.slice(index + 1)];
 
-/*   onSetOneCheckbox = (event) => {
-    const name = event.target.name;
-    const n = this.state[name];
+    if (  newFilters[1].isChecked
+          && newFilters[2].isChecked
+          && newFilters[3].isChecked
+          && newFilters[4].isChecked ) {
+      const newFirstElem = { ...item0, isChecked: true };
+      // const newFilters = [ newFirstElem, ...this.state.filters.slice(1, index), newItem, ...this.state.filters.slice(index + 1) ];
+      // return newFilters;
+      return [ newFirstElem, ...filters.slice(1, index), newItem, ...filters.slice(index + 1) ];
+    }
     
-    if (n) {
-      this.setState({ [name]: false, allTr: false });
-    } else {
-      
-      this.setState({ [name]: true });
-    }
-  } */
+    return newFilters;
+  }
 
   render() {
-
+    const { filters } = this.state;
     return (
       <form className="form">
-        
         {
-          this.state.filterState.map((item) => (
-            <div key={item.id}>
-              <input type="checkbox" onChange={this.handleCheckboxClick} checked={item.isChecked} id="all-check" name={item.name} />
-              <label htmlFor="all-check">{item.title}</label>
-            </div>
-          ))
+          filters.map(item => {
+            return (
+              <div key={item.name}>
+                <input type="checkbox"
+                    checked={item.isChecked}
+                    name={item.name}
+                    id={item.id}
+                    onChange={this.handleCheckboxClick} />
+                  <label htmlFor={item.id}>{item.title}</label>
+              </div>
+            )})
         }
-        
-        {/* <input type="checkbox" onChange={this.onSetAllCheckboxes} checked={this.state.allTr} id="all-check" name="allTr" />
-        <label htmlFor="all-check">Все</label>
-
-        <input type="checkbox" onChange={this.onSetOneCheckbox} checked={this.state.noTr} id="no-transfer" name="noTr" />
-        <label htmlFor="no-transfer">Без пересадок</label>
-
-        <input type="checkbox" onChange={this.onSetOneCheckbox} checked={this.state.oneTr} id="1-transfer" name="oneTr" />
-        <label htmlFor="1-transfer">1 пересадка</label>
-
-        <input type="checkbox" onChange={this.onSetOneCheckbox} checked={this.state.twoTr} id="2-transfers" name="twoTr" />
-        <label htmlFor="2-transfers">2 пересадки</label>
-
-        <input type="checkbox" onChange={this.onSetOneCheckbox} checked={this.state.thrieTr} id="3-transfers" name="thrieTr" />
-        <label htmlFor="3-transfers">3 пересадки</label> */}
       </form>
     );
   }
 };
-
-/* const Checkboxes = (props) => {
-  const { name, title, isChecked } = props.item;
-  const { handleCheckboxClick } = props;
-  console.log(name);
-  console.log(title);
-  console.log(isChecked);
-  return (
-    <div>
-      <input type="checkbox" onChange={handleCheckboxClick} checked={isChecked} data-name={name} id="all-check" name={name} />
-      <label htmlFor="all-check">{title}</label>
-    </div>
-  );
-} */
 
 export default Filter;
