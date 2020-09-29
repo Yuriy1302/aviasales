@@ -14,6 +14,7 @@ class Filter extends React.Component {
           { id: 4, name: 'twoTr', title: '2 пересадки', isChecked: false },
           { id: 5, name: 'thrieTr', title: '3 пересадки', isChecked: false },
         ],
+        error: false,
       };
   }
 
