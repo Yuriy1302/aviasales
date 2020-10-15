@@ -1,15 +1,18 @@
 import React from "react";
 
-import Ticket from "../Ticket";
+import TicketForm from "../TicketForm";
 
-const TicketsList = () => {
+const TicketsList = (props) => {
+
+  const { sortTickets } = props;
+
+  // console.log('tickets ', tickets);
+
   return (
     <>
-      <Ticket />
-      <Ticket />
-      <Ticket />
-      <Ticket />
-      <Ticket />
+      {
+        sortTickets.map((ticket, index) => <TicketForm ticket={ticket} key={index} />)
+      }
     </>
   );
 };

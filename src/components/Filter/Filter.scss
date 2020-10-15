@@ -19,7 +19,18 @@ input[type="checkbox"] {
 label {
   color: #4a4a4a;
   cursor: pointer;
-  vertical-align: middle;  
+  vertical-align: middle;
+
+  line-height: 40px;
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px; 
+}
+
+label:hover {
+  background-color: #f1fcff;
 }
 
 /* Внешний вид чекбокса */
