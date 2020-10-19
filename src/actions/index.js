@@ -22,7 +22,8 @@ export const fetchTickets = (searchId) => {
         type: 'TICKETS_FETCH_SUCCESS',
         tickets,
         stop
-      })
+      });
+      dispatch(sortByPrice());
     } catch (err) {
       dispatch({ type: 'TICKETS_FETCH_FAILURE' });
       console.error('Возникда ошибки: ', err);
@@ -31,7 +32,23 @@ export const fetchTickets = (searchId) => {
   };
 };
 
-export const allRoutes = () => {
+
+/* Сортировка по цене */
+export const sortByPrice = () => {
+  console.log('Click action SortByPrice');
+  return { type: 'SORT_BY_PRICE' }
+};
+
+/* Сортировка по времени в пути */
+export const sortByDuration = () => {
+  console.log('Click action SortByDuration');
+  return { type: 'SORT_BY_DURATION' }
+};
+
+
+
+
+export const allRoutes = (event) => {
   /* const value = event.target.value;
   console.log('value ', value); */
   return { type: 'SELECT_ALL_ROUTES' };

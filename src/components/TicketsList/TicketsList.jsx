@@ -5,10 +5,11 @@ import * as actions from '../../actions';
 import Ticket from '../Ticket';
 
 const mapStateToProps = (state) => {
-  const { fetchTickets, tickets, searchId, filterStops } = state;
+  const { fetchTickets, tickets, sortedTickets, searchId, filterStops } = state;
   return {
     fetchTickets,
-    tickets,
+    /* tickets, */
+    sortedTickets,
     searchId,
     filterStops
   }
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
 
 const TicketsList = (props) => {
 
-  const { tickets, filterStops } = props;
+  const { tickets, sortedTickets, filterStops } = props;
   const checkedList = new Set(filterStops.map(item => item.isChecked));
   
   if (checkedList.size === 1 && checkedList.has(false)) {
@@ -25,11 +26,13 @@ const TicketsList = (props) => {
     );
   };
 
+  console.log('sortedTickets in TicketsList: ', sortedTickets);
+
   return (
     <>
       {
         /* sortTickets.map((ticket, index) => <TicketForm ticket={ticket} key={index} />) */
-        tickets.map((ticket, index) => <Ticket ticket={ticket} key={index} />)
+        sortedTickets.length !== 0 ? sortedTickets.map((ticket, index) => <Ticket ticket={ticket} key={index} />) : <h1>Нет билетов</h1>
       }
     </>
   );

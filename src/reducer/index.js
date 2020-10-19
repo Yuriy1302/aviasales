@@ -7,6 +7,7 @@ const reducer = (
       { id: 4, name: 'twoStops', stops: 2, title: '2 пересадки', isChecked: true },
       { id: 5, name: 'threeStops', stops: 3, title: '3 пересадки', isChecked: true },    
     ],
+    sortedTickets: [],
     tickets: [],
     stop: false,
     error: false,
@@ -20,14 +21,34 @@ const reducer = (
       return { ...state, searchId: action.searchId }
     
     case 'TICKETS_FETCH_REQUEST':
-      return { filterStops: state.filterStops, tickets: state.tickets, stop: state.stop, error: false, loader: true, searchId: state.searchId }
+      return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: state.tickets, stop: state.stop, error: false, loader: true, searchId: state.searchId }
     
     case 'TICKETS_FETCH_SUCCESS':
-      return { filterStops: state.filterStops, tickets: [...state.tickets, ...action.tickets], stop: action.stop, error: false, loader: false, searchId: state.searchId };
+      return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: [...state.tickets, ...action.tickets], stop: action.stop, error: false, loader: false, searchId: state.searchId };
     
     case 'TICKETS_FETCH_FAILURE':
       /* return { tickets: [...state.tickets], stop: state.stop, error: true, loader: false, searchId: state.searchId }; */
       return { ...state, error: true, loader: false };
+    
+    /* Сортировка по цене */
+    case 'SORT_BY_PRICE': {
+      
+      const { tickets } = state;
+      const sortedTickets = tickets.sort((a, b) => a.price - b.price).slice(0, 5);
+      console.log('sortedTickets by Price in reducer', sortedTickets);
+      return { ...state, sortedTickets: sortedTickets };
+    }
+
+    /* Сортировка по времени в пути */
+    case 'SORT_BY_DURATION': {
+      
+      const { tickets } = state;
+      const sortedTickets = tickets.sort((a, b) => (a.segments[0].duration + a.segments[1].duration) - (b.segments[0].duration + b.segments[1].duration)).slice(0, 5);
+      console.log('sortedTickets by Duration in reducer', sortedTickets);
+      return { ...state, sortedTickets: sortedTickets };
+    }
+
+
     
     case 'SELECT_ALL_ROUTES': {
       const { filterStops } = state;

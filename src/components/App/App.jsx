@@ -22,10 +22,7 @@ const mapStateToProps = (state) => {
 
 class App extends React.Component {
   
-  constructor() {
-    super();
-  }
-
+  
 /*   sortByPrice = () => {
     const sortTickets = this.state.data.tickets.sort(function (a, b) {
       return a.price - b.price;
@@ -55,7 +52,8 @@ class App extends React.Component {
 
   render() {
     
-    const { error, loader } = this.props;
+    const { error, loader, sortByPrice, sortByDuration } = this.props;
+    /* const { sortByPrice } = actions; */
 
     if (error) {
       return <ErrorIndicator />
@@ -72,10 +70,10 @@ class App extends React.Component {
           </div>
           <div className="col_2">
             <div className="btn-group buttons">
-              <button type="button" onClick={() => {}} className="btn btn-primary btn-lg btn-my">
+              <button type="button" onClick={sortByPrice} className="btn btn-primary btn-lg btn-my">
                 Самый дешевый
               </button>
-              <button type="button" onClick={() => {}} className="btn btn-default btn-lg btn-my">
+              <button type="button" onClick={sortByDuration} className="btn btn-default btn-lg btn-my">
                 Самый быстрый
               </button>
             </div>
