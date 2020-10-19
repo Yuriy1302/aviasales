@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./TicketForm.scss";
+import "./Ticket.scss";
 
-const TicketForm = (props) => {
+const Ticket = (props) => {
 
   const word = (index) => {
     if (index === 0) {
@@ -85,4 +85,4 @@ const TicketForm = (props) => {
   );
 };
 
-export default TicketForm;
+export default Ticket;

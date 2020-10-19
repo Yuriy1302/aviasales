@@ -1,24 +1,36 @@
 import React from "react";
 import { connect } from 'react-redux';
-
-import * as actions from '../../action';
+import * as actions from '../../actions';
 
 import "./Filter.scss";
 
-const Filter = ({filtered, ...actions}) => {
+const mapStateToProps = (state) => {
+  const { filterStops } = state;
+  return {
+    filterStops
+  };
+};
+
+const Filter = (props) => {
+
+  const { filterStops, ...actions } = props;
+  // console.log('filterStops - ', filterStops);
+
   return (
     <div className="col1">
       <h6 style={{ fontSize: '12px', textAlign: 'center' }}>КОЛИЧЕСТВО ПЕРЕСАДОК</h6>
       <form className="form">
         {
-          filtered.map(item => {
+          filterStops.map(item => {
+            /* console.log(item.name); */
             return (
               <div key={item.name}>
                 <input type="checkbox"
                     checked={item.isChecked}
                     name={item.name}
                     id={item.id}
-                    onChange={(event) => actions[item.name](event)} />
+                    onChange={actions[item.name]}
+                     />
                   <label htmlFor={item.id}>{item.title}</label>
               </div>
             )})
@@ -26,12 +38,6 @@ const Filter = ({filtered, ...actions}) => {
       </form>
     </div>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    filtered: state
-  };
 };
 
 export default connect(mapStateToProps, actions)(Filter);
