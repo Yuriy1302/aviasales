@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const Filter = (props) => {
 
-  const { filterStops, ...actions } = props;
+  const { filterStops, filteredTicketsList, ...actions } = props;
   // console.log('filterStops - ', filterStops);
 
   return (

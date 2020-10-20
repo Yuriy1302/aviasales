@@ -49,6 +49,24 @@ const reducer = (
     }
 
 
+    case 'FILTERED_TICKETS_LIST': {
+      const { filterStops, tickets } = state;
+      const checkedFilters = filterStops.filter(item => item.isChecked === 'true');
+      let newTicketsArr = [];
+      for (let i = 0; i < tickets.length; i += 1) {
+        for (let j = 0; j < checkedFilters.length; j += 1) {
+          let sumStops = tickets[i].segments[0].stops.length + tickets[i].segments[1].stops.length;
+          if (sumStops === checkedFilters[j].stops) {
+            newTicketsArr = newTicketsArr.push(tickets[i]);
+          }
+        }
+      }
+      
+
+      console.log('Work Filtered Tickets List: ', checkedFilters);
+    }
+
+
     
     case 'SELECT_ALL_ROUTES': {
       const { filterStops } = state;

@@ -5,13 +5,14 @@ import * as actions from '../../actions';
 import Ticket from '../Ticket';
 
 const mapStateToProps = (state) => {
-  const { fetchTickets, tickets, sortedTickets, searchId, filterStops } = state;
+  const { fetchTickets, tickets, sortedTickets, searchId, filterStops, loader } = state;
   return {
     fetchTickets,
     /* tickets, */
     sortedTickets,
     searchId,
-    filterStops
+    filterStops,
+    loader
   }
 };
 
@@ -26,13 +27,13 @@ const TicketsList = (props) => {
     );
   };
 
-  console.log('sortedTickets in TicketsList: ', sortedTickets);
+  // console.log('sortedTickets in TicketsList: ', sortedTickets);
 
   return (
     <>
       {
         /* sortTickets.map((ticket, index) => <TicketForm ticket={ticket} key={index} />) */
-        sortedTickets.length !== 0 ? sortedTickets.map((ticket, index) => <Ticket ticket={ticket} key={index} />) : <h1>Нет билетов</h1>
+        sortedTickets.length !== 0 ? sortedTickets.map((ticket, index) => <Ticket ticket={ticket} key={index} />) : <h2>Рейсов, подходящих под заданные фильтры, не найдено~!</h2>
       }
     </>
   );
