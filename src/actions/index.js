@@ -40,7 +40,9 @@ export const fetchTickets = (searchId) => {
         const response = await fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`);
         // const { tickets, stop } = await response.json();
         //console.log('Ошибка => ', response.status);
-        if (response.status === 500) continue;
+        if (response.status === 500) {
+          dispatch(fetchTickets(searchId))
+        };
         const data = await response.json();
         // console.log('Tickets -> ', tickets);
         dispatch({
