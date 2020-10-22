@@ -4,19 +4,20 @@ import * as actions from '../../actions';
 
 import Filter from '../Filter';
 import TicketsList from '../TicketsList';
-import ErrorIndicator from '../ErrorIndicator';
+// import ErrorIndicator from '../ErrorIndicator';
 import Spiner from '../Spiner';
 
 import logo from "../../images/logo.svg";
 import "./App.scss";
 
 const mapStateToProps = (state) => {
-  const { tickets, error, loader, searchId } = state;
+  const { tickets, error, loader, searchId, cheap } = state;
   return {
     tickets,
     error,
     loader,
-    searchId
+    searchId,
+    cheap
   }
 };
 
@@ -52,12 +53,19 @@ class App extends React.Component {
 
   render() {
     
-    const { error, loader, sortByPrice, sortByDuration } = this.props;
+    const { error, loader, tickets, sortByPrice, sortByDuration, cheap } = this.props;
     /* const { sortByPrice } = actions; */
-
-    if (error) {
-      return <ErrorIndicator />
+    let btnCheap = "btn btn-primary btn-lg btn-my";
+    let btnQuick = "btn btn-default btn-lg btn-my";
+    if (!cheap) {
+      btnCheap = "btn btn-default btn-lg btn-my";
+      btnQuick = "btn btn-primary btn-lg btn-my";
     }
+    
+
+    /* if (error) {
+      return <ErrorIndicator />
+    } */
 
     return (
       <div>
@@ -70,10 +78,10 @@ class App extends React.Component {
           </div>
           <div className="col_2">
             <div className="btn-group buttons">
-              <button type="button" onClick={sortByPrice} className="btn btn-primary btn-lg btn-my">
+              <button type="button" onClick={sortByPrice} className={btnCheap}>
                 Самый дешевый
               </button>
-              <button type="button" onClick={sortByDuration} className="btn btn-default btn-lg btn-my">
+              <button type="button" onClick={sortByDuration} className={btnQuick}>
                 Самый быстрый
               </button>
             </div>

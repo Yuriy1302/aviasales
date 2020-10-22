@@ -13,6 +13,7 @@ const reducer = (
     error: false,
     loader: false,
     searchId: null,
+    cheap: true
   },
   action
 ) => {
@@ -21,35 +22,43 @@ const reducer = (
       return { ...state, searchId: action.searchId }
     
     case 'TICKETS_FETCH_REQUEST':
-      return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: state.tickets, stop: state.stop, error: false, loader: true, searchId: state.searchId }
+      return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: state.tickets, stop: state.stop, error: false, loader: true, searchId: state.searchId, cheap: state.cheap }
     
     case 'TICKETS_FETCH_SUCCESS':
-      return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: [...state.tickets, ...action.tickets], stop: action.stop, error: false, loader: false, searchId: state.searchId };
+      // console.log('Tickets in Success of reducer: ', state.tickets);
+      return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: [...state.tickets, ...action.tickets], stop: action.stop, error: false, loader: false, searchId: state.searchId, cheap: state.cheap };
     
     case 'TICKETS_FETCH_FAILURE':
       /* return { tickets: [...state.tickets], stop: state.stop, error: true, loader: false, searchId: state.searchId }; */
       return { ...state, error: true, loader: false };
     
     /* Сортировка по цене */
-    case 'SORT_BY_PRICE': {
-      
-      const { tickets } = state;
-      const sortedTickets = tickets.sort((a, b) => a.price - b.price).slice(0, 5);
-      console.log('sortedTickets by Price in reducer', sortedTickets);
-      return { ...state, sortedTickets: sortedTickets };
-    }
+    /* case 'SORT_BY_PRICE':
+      console.log('sortedTickets by Price in reducer', action.payload);
+      return { ...state, sortedTickets: action.payload, cheap: true };
+ */
+    /* Сортировка по времени в пути */
+    /* case 'SORT_BY_DURATION': {
+      console.log('sortedTickets by Duration in reducer', action.payload);
+      return { ...state, sortedTickets: action.payload, cheap: false };
+    } */
+
+
+
+    /* Сортировка по цене */
+    case 'SORT_BY_PRICE':
+      console.log('sortedTickets by Price in reducer', action.payload);
+      return { ...state, cheap: true };
 
     /* Сортировка по времени в пути */
-    case 'SORT_BY_DURATION': {
-      
-      const { tickets } = state;
-      const sortedTickets = tickets.sort((a, b) => (a.segments[0].duration + a.segments[1].duration) - (b.segments[0].duration + b.segments[1].duration)).slice(0, 5);
-      console.log('sortedTickets by Duration in reducer', sortedTickets);
-      return { ...state, sortedTickets: sortedTickets };
-    }
+    case 'SORT_BY_DURATION':
+      console.log('sortedTickets by Duration in reducer', action.payload);
+      return { ...state, cheap: false };
 
 
-    case 'FILTERED_TICKETS_LIST': {
+
+
+    /* case 'FILTERED_TICKETS_LIST': {
       const { filterStops, tickets } = state;
       const checkedFilters = filterStops.filter(item => item.isChecked === 'true');
       let newTicketsArr = [];
@@ -64,9 +73,9 @@ const reducer = (
       
 
       console.log('Work Filtered Tickets List: ', checkedFilters);
-    }
+    } */
 
-
+    /* Изменение фильтров  */
     
     case 'SELECT_ALL_ROUTES': {
       const { filterStops } = state;

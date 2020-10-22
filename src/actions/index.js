@@ -40,9 +40,9 @@ export const fetchTickets = (searchId) => {
         const response = await fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`);
         // const { tickets, stop } = await response.json();
         //console.log('Ошибка => ', response.status);
-        if (response.status === 500) {
+        /* if (response.status === 500) {
           dispatch(fetchTickets(searchId))
-        };
+        }; */
         const data = await response.json();
         // console.log('Tickets -> ', tickets);
         dispatch({
@@ -50,7 +50,7 @@ export const fetchTickets = (searchId) => {
           tickets: data.tickets,
           stop: data.stop
         });
-        dispatch(sortByPrice());
+        /* dispatch(sortByPrice(data.tickets)); */
         if (data.stop) {
           return;
         }
@@ -68,15 +68,23 @@ export const fetchTickets = (searchId) => {
 
 
 /* Сортировка по цене */
-export const sortByPrice = () => {
+export const sortByPrice = (tickets) => {
   console.log('Click action SortByPrice');
-  return { type: 'SORT_BY_PRICE' }
+  /* const sortedTickets = tickets.sort((a, b) => a.price - b.price).slice(0, 5); */
+  return {
+    type: 'SORT_BY_PRICE',
+  /*   payload: sortedTickets */
+  }
 };
 
 /* Сортировка по времени в пути */
-export const sortByDuration = () => {
+export const sortByDuration = (tickets) => {
   console.log('Click action SortByDuration');
-  return { type: 'SORT_BY_DURATION' }
+  /* const sortedTickets = tickets.sort((a, b) => (a.segments[0].duration + a.segments[1].duration) - (b.segments[0].duration + b.segments[1].duration)).slice(0, 5); */
+  return {
+    type: 'SORT_BY_DURATION',
+    /* payload: sortedTickets */
+  }
 };
 
 
