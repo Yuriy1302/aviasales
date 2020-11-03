@@ -25,58 +25,20 @@ const reducer = (
       return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: state.tickets, stop: state.stop, error: false, loader: true, searchId: state.searchId, cheap: state.cheap }
     
     case 'TICKETS_FETCH_SUCCESS':
-      // console.log('Tickets in Success of reducer: ', state.tickets);
       return { filterStops: state.filterStops, sortedTickets: state.sortedTickets, tickets: [...state.tickets, ...action.tickets], stop: action.stop, error: false, loader: false, searchId: state.searchId, cheap: state.cheap };
     
     case 'TICKETS_FETCH_FAILURE':
-      /* return { tickets: [...state.tickets], stop: state.stop, error: true, loader: false, searchId: state.searchId }; */
       return { ...state, error: true, loader: false };
-    
-    /* Сортировка по цене */
-    /* case 'SORT_BY_PRICE':
-      console.log('sortedTickets by Price in reducer', action.payload);
-      return { ...state, sortedTickets: action.payload, cheap: true };
- */
-    /* Сортировка по времени в пути */
-    /* case 'SORT_BY_DURATION': {
-      console.log('sortedTickets by Duration in reducer', action.payload);
-      return { ...state, sortedTickets: action.payload, cheap: false };
-    } */
-
-
-
+        
     /* Сортировка по цене */
     case 'SORT_BY_PRICE':
-      console.log('sortedTickets by Price in reducer', action.payload);
       return { ...state, cheap: true };
 
     /* Сортировка по времени в пути */
     case 'SORT_BY_DURATION':
-      console.log('sortedTickets by Duration in reducer', action.payload);
       return { ...state, cheap: false };
 
-
-
-
-    /* case 'FILTERED_TICKETS_LIST': {
-      const { filterStops, tickets } = state;
-      const checkedFilters = filterStops.filter(item => item.isChecked === 'true');
-      let newTicketsArr = [];
-      for (let i = 0; i < tickets.length; i += 1) {
-        for (let j = 0; j < checkedFilters.length; j += 1) {
-          let sumStops = tickets[i].segments[0].stops.length + tickets[i].segments[1].stops.length;
-          if (sumStops === checkedFilters[j].stops) {
-            newTicketsArr = newTicketsArr.push(tickets[i]);
-          }
-        }
-      }
-      
-
-      console.log('Work Filtered Tickets List: ', checkedFilters);
-    } */
-
     /* Изменение фильтров  */
-    
     case 'SELECT_ALL_ROUTES': {
       const { filterStops } = state;
       const { isChecked } = filterStops[0];

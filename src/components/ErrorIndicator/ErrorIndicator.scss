@@ -8,7 +8,6 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  /* box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.2); */
 
     h2 {
       color: #4e4e4e;
@@ -29,7 +28,7 @@
   z-index: 100;
 }
 
-.myShadow1 {
+.shadow1 {
   /* border: 1px solid red; */
   z-index: 1;
   width: 200px;
@@ -41,7 +40,7 @@
   transform: rotate(-3deg);
 }
 
-.myShadow2 {
+.shadow2 {
   border: 1px solid red;
   z-index: 1;
   width: 200px;

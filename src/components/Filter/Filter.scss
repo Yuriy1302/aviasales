@@ -20,7 +20,6 @@ label {
   color: #4a4a4a;
   cursor: pointer;
   vertical-align: middle;
-
   line-height: 40px;
   width: 100%;
   height: 40px;
@@ -28,12 +27,12 @@ label {
   padding-left: 20px;
   font-size: 13px; 
 }
-
+/* Перенсти в label как :hove {...} */
 label:hover {
   background-color: #f1fcff;
 }
 
-/* Внешний вид чекбокса */
+/* Внешний вид чекбокса */ /* Перенсти в label как ::before {...} */
 label::before {
   content: " ";
   color: #4a4a4a;

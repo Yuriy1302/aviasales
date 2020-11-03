@@ -1,43 +1,46 @@
 import React from "react";
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import * as actions from "../../actions";
 
 import "./Filter.scss";
 
 const mapStateToProps = (state) => {
   const { filterStops } = state;
-  return {
-    filterStops
-  };
+  return { filterStops };
 };
 
 const Filter = (props) => {
-
-  const { filterStops, filteredTicketsList, ...actions } = props;
-  // console.log('filterStops - ', filterStops);
+  const { filterStops, ...actions } = props;
 
   return (
     <div className="col1">
-      <h6 style={{ fontSize: '12px', textAlign: 'center' }}>КОЛИЧЕСТВО ПЕРЕСАДОК</h6>
+      <h6 style={{ fontSize: "12px", textAlign: "center" }}>
+        КОЛИЧЕСТВО ПЕРЕСАДОК
+      </h6>
       <form className="form">
-        {
-          filterStops.map(item => {
-            /* console.log(item.name); */
-            return (
-              <div key={item.name}>
-                <input type="checkbox"
-                    checked={item.isChecked}
-                    name={item.name}
-                    id={item.id}
-                    onChange={actions[item.name]}
-                     />
-                  <label htmlFor={item.id}>{item.title}</label>
-              </div>
-            )})
-        }
+        {filterStops.map((item) => {
+          return (
+            <div key={item.name}>
+              <input
+                type="checkbox"
+                checked={item.isChecked}
+                name={item.name}
+                id={item.id}
+                onChange={actions[item.name]}
+              />
+              <label htmlFor={item.id}>{item.title}</label>
+            </div>
+          );
+        })}
       </form>
     </div>
   );
+};
+
+Filter.propTypes = {
+  filterStops: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, actions)(Filter);
